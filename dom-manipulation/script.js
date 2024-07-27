@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     let quotes = [
-      { content: "Life is what happens when you're busy making other plans.", category: "Life" },
-      { content: "The way to get started is to quit talking and begin doing.", category: "Motivation" },
-      { content: "Don't watch the clock; do what it does. Keep going.", category: "Motivation" },
-      { content: "The future belongs to those who believe in the beauty of their dreams.", category: "Inspiration" },
-      { content: "It does not matter how slowly you go as long as you do not stop.", category: "Perseverance" }
+      { text: "Life is what happens when you're busy making other plans.", category: "Life" },
+      { text: "The way to get started is to quit talking and begin doing.", category: "Motivation" },
+      { text: "Don't watch the clock; do what it does. Keep going.", category: "Motivation" },
+      { text: "The future belongs to those who believe in the beauty of their dreams.", category: "Inspiration" },
+      { text: "It does not matter how slowly you go as long as you do not stop.", category: "Perseverance" }
     ];
   
     const quoteDisplay = document.getElementById('quoteDisplay');
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   
-    function displayRandomQuote() {
+    function showRandomQuote() {
       const randomIndex = Math.floor(Math.random() * quotes.length);
       const quote = quotes[randomIndex];
   
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
       clearElement(quoteDisplay);
   
       // Create new elements
-      const quoteText = createElementWithText('p', quote.content);
+      const quoteText = createElementWithText('p', quote.text);
       const quoteCategory = createElementWithText('em', quote.category);
   
       // Append elements to the display
@@ -43,10 +43,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const response = await fetch('https://api.quotable.io/quotes?limit=10');
         const data = await response.json();
         quotes = data.results.map(quote => ({
-          content: quote.content,
+          text: quote.content,
           category: quote.author
         }));
-        displayRandomQuote(); // Show an initial quote when the page loads
+        showRandomQuote(); // Show an initial quote when the page loads
       } catch (error) {
         console.error('Error fetching quotes:', error);
       }
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const newQuoteCategory = document.getElementById('newQuoteCategory').value;
   
       if (newQuoteText && newQuoteCategory) {
-        const newQuote = { content: newQuoteText, category: newQuoteCategory };
+        const newQuote = { text: newQuoteText, category: newQuoteCategory };
         quotes.push(newQuote);
         document.getElementById('newQuoteText').value = '';
         document.getElementById('newQuoteCategory').value = '';
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   
-    newQuoteButton.addEventListener('click', displayRandomQuote);
+    newQuoteButton.addEventListener('click', showRandomQuote);
     window.addQuote = addQuote;
   
     // Fetch quotes from the API when the page loads
