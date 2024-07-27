@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   
-    function createAddQuoteForm() {
+    function addQuote() {
       const newQuoteText = document.getElementById('newQuoteText').value;
       const newQuoteCategory = document.getElementById('newQuoteCategory').value;
   
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   
     newQuoteButton.addEventListener('click', showRandomQuote);
-    window.addQuote = createAddQuoteForm;
+    window.addQuote = addQuote;
   
     // Fetch quotes from the API when the page loads
     fetchQuotes();
