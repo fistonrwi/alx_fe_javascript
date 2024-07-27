@@ -10,32 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const quoteDisplay = document.getElementById('quoteDisplay');
     const newQuoteButton = document.getElementById('newQuote');
   
-    function createElementWithText(tag, text) {
-      const element = document.createElement(tag);
-      element.textContent = text;
-      return element;
-    }
-  
-    function clearElement(element) {
-      while (element.firstChild) {
-        element.removeChild(element.firstChild);
-      }
-    }
-  
     function showRandomQuote() {
       const randomIndex = Math.floor(Math.random() * quotes.length);
       const quote = quotes[randomIndex];
-  
-      // Clear the current content
-      clearElement(quoteDisplay);
-  
-      // Create new elements
-      const quoteText = createElementWithText('p', quote.text);
-      const quoteCategory = createElementWithText('em', quote.category);
-  
-      // Append elements to the display
-      quoteDisplay.appendChild(quoteText);
-      quoteDisplay.appendChild(quoteCategory);
+      quoteDisplay.innerHTML = `<p>${quote.text}</p><em>${quote.category}</em>`;
     }
   
     async function fetchQuotes() {
