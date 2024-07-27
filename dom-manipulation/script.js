@@ -10,14 +10,18 @@ document.addEventListener('DOMContentLoaded', () => {
       return element;
     }
   
+    function clearElement(element) {
+      while (element.firstChild) {
+        element.removeChild(element.firstChild);
+      }
+    }
+  
     function showRandomQuote() {
       const randomIndex = Math.floor(Math.random() * quotes.length);
       const quote = quotes[randomIndex];
   
       // Clear the current content
-      while (quoteDisplay.firstChild) {
-        quoteDisplay.removeChild(quoteDisplay.firstChild);
-      }
+      clearElement(quoteDisplay);
   
       // Create new elements
       const quoteText = createElementWithText('p', quote.content);
