@@ -123,7 +123,7 @@ async function syncQuotesWithServer() {
 
   if (response.ok) {
     const serverQuotes = await response.json();
-    console.log("Quotes synced with server:", serverQuotes);
+    console.log("Quotes synced with server!", serverQuotes);
   } else {
     console.error("Failed to sync quotes with server:", response.statusText);
   }
