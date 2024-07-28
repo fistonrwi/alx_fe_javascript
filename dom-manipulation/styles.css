@@ -1,81 +1,110 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
+/* Reset some default styles for a cleaner look */
+* {
   margin: 0;
-  padding: 20px;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f0f0;
+  color: #333;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 h1 {
+  margin-bottom: 20px;
+  font-size: 2.5em;
   color: #333;
 }
 
 #quoteDisplay {
   background-color: #fff;
-  border: 1px solid #ddd;
   border-radius: 5px;
   padding: 20px;
-  margin: 20px 0;
-  width: 80%;
-  max-width: 600px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 #quoteDisplay p {
-  font-size: 1.2em;
-  margin: 0 0 10px;
+  font-size: 1.5em;
+  margin-bottom: 10px;
 }
 
 #quoteDisplay em {
-  color: #666;
-  font-size: 0.9em;
+  color: #777;
+  font-size: 1em;
 }
 
 button {
   background-color: #4CAF50;
   color: white;
-  border: none;
   padding: 10px 20px;
   margin: 10px;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
   font-size: 1em;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
 }
 
 button:hover {
   background-color: #45a049;
 }
 
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
 input[type="text"] {
   padding: 10px;
-  margin: 10px 0;
+  margin: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  width: calc(100% - 24px);
+  font-size: 1em;
+  width: calc(100% - 42px); /* Adjust for padding and border */
+}
+
+#newQuoteText, #newQuoteCategory {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 #categoryFilter {
   padding: 10px;
-  margin: 10px 0;
+  margin: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  width: calc(100% - 24px);
+  font-size: 1em;
 }
 
-div {
+#quoteForm {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
   margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+button#syncButton {
+  background-color: #008CBA;
+}
+
+button#syncButton:hover {
+  background-color: #007BB5;
+}
+
+button#exportJson {
+  background-color: #f39c12;
+}
+
+button#exportJson:hover {
+  background-color: #e67e22;
 }
 
 input[type="file"] {
-  margin: 10px 0;
+  margin-top: 10px;
 }

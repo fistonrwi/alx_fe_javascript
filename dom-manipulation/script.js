@@ -1,11 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  let quotes = JSON.parse(localStorage.getItem('quotes')) || [
-    { text: "Life is what happens when you're busy making other plans.", category: "Life" },
-    { text: "The way to get started is to quit talking and begin doing.", category: "Motivation" },
-    { text: "Don't watch the clock; do what it does. Keep going.", category: "Motivation" },
-    { text: "The future belongs to those who believe in the beauty of their dreams.", category: "Inspiration" },
-    { text: "It does not matter how slowly you go as long as you do not stop.", category: "Perseverance" }
-  ];
+  let quotes = JSON.parse(localStorage.getItem('quotes')) || [];
 
   const quoteDisplay = document.getElementById('quoteDisplay');
   const newQuoteButton = document.getElementById('newQuote');
@@ -13,6 +7,46 @@ document.addEventListener('DOMContentLoaded', () => {
   const importFileInput = document.getElementById('importFile');
   const exportJsonButton = document.getElementById('exportJson');
   const categoryFilter = document.getElementById('categoryFilter');
+  const syncButton = document.createElement('button');
+  syncButton.textContent = 'Sync with Server';
+  document.body.insertBefore(syncButton, exportJsonButton);
+
+  const API_URL = 'https://jsonplaceholder.typicode.com/posts';
+
+  async function fetchQuotesFromServer() {
+    try {
+      const response = await fetch(API_URL);
+      const data = await response.json();
+      return data.slice(0, 5).map(item => ({
+        text: item.title,
+        category: 'Server'
+      }));
+    } catch (error) {
+      console.error('Error fetching data from server:', error);
+      return [];
+    }
+  }
+
+  async function syncQuotes() {
+    const serverQuotes = await fetchQuotesFromServer();
+    const localQuotes = JSON.parse(localStorage.getItem('quotes')) || [];
+    const mergedQuotes = mergeQuotes(localQuotes, serverQuotes);
+    localStorage.setItem('quotes', JSON.stringify(mergedQuotes));
+    quotes = mergedQuotes;
+    populateCategories();
+    filterQuotes();
+    alert('Data synced with server!');
+  }
+
+  function mergeQuotes(localQuotes, serverQuotes) {
+    const mergedQuotes = [...localQuotes];
+    serverQuotes.forEach(serverQuote => {
+      if (!localQuotes.some(localQuote => localQuote.text === serverQuote.text)) {
+        mergedQuotes.push(serverQuote);
+      }
+    });
+    return mergedQuotes;
+  }
 
   function showRandomQuote() {
     const filteredQuotes = getFilteredQuotes();
@@ -96,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
   addQuoteButton.addEventListener('click', addQuote);
   exportJsonButton.addEventListener('click', exportToJson);
   importFileInput.addEventListener('change', importFromJsonFile);
+  syncButton.addEventListener('click', syncQuotes);
 
   // Populate categories and set the last selected filter when the page loads
   populateCategories();
@@ -111,4 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!lastViewedQuote) {
     showRandomQuote();
   }
+
+  // Periodic data fetching to simulate server updates
+  setInterval(syncQuotes, 60000); // Sync every 60 seconds
 });
