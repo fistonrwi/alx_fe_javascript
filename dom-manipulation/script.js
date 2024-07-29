@@ -37,6 +37,7 @@ function addQuote() {
     saveQuotes();
     populateCategories();
     filterQuotes();
+    sendQuoteToServer(newQuote);
     alert("Quote added successfully!");
   } else {
     alert("Please enter both quote text and category.");
@@ -160,6 +161,23 @@ async function fetchQuotesFromServer() {
     alert('Quotes synced with server!');
   } catch (error) {
     console.error('Error fetching quotes:', error);
+  }
+}
+
+// Function to send a new quote to the server using POST request
+async function sendQuoteToServer(quote) {
+  try {
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(quote)
+    });
+    const data = await response.json();
+    console.log('Quote sent to server:', data);
+  } catch (error) {
+    console.error('Error sending quote to server:', error);
   }
 }
 
