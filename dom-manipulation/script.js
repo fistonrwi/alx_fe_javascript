@@ -204,6 +204,9 @@ async function syncQuotes() {
   }
 }
 
+// Set up periodic data syncing every 5 minutes
+setInterval(syncQuotes, 300000);
+
 // Event listeners
 document.getElementById("newQuote").addEventListener("click", showRandomQuote);
 
