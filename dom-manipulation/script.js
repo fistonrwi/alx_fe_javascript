@@ -146,6 +146,23 @@ function importFromJsonFile(event) {
   fileReader.readAsText(event.target.files[0]);
 }
 
+// Function to fetch quotes from a server (simulated)
+function fetchQuotesFromServer() {
+  // Simulate fetching quotes from a server
+  fetch('https://jsonplaceholder.typicode.com/posts')
+    .then(response => response.json())
+    .then(data => {
+      data.forEach(post => {
+        quotes.push({ text: post.title, category: "Fetched" });
+      });
+      saveQuotes();
+      populateCategories();
+      filterQuotes();
+      alert('Quotes synced with server!');
+    })
+    .catch(error => console.error('Error fetching quotes:', error));
+}
+
 // Event listeners
 document.getElementById("newQuote").addEventListener("click", showRandomQuote);
 
@@ -156,3 +173,6 @@ filterQuotes();
 
 // Create the form for adding new quotes
 createAddQuoteForm();
+
+// Fetch quotes from server and populate the quotes array
+fetchQuotesFromServer();
