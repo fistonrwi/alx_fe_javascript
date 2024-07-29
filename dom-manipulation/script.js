@@ -181,6 +181,29 @@ async function sendQuoteToServer(quote) {
   }
 }
 
+// Function to sync quotes with the server and handle conflicts
+async function syncQuotes() {
+  try {
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+    const serverQuotes = await response.json();
+
+    // Clear existing fetched quotes
+    quotes = quotes.filter(quote => quote.category !== "Fetched");
+
+    // Add server quotes
+    serverQuotes.forEach(post => {
+      quotes.push({ text: post.title, category: "Fetched" });
+    });
+
+    saveQuotes();
+    populateCategories();
+    filterQuotes();
+    console.log('Quotes synced with server!');
+  } catch (error) {
+    console.error('Error syncing quotes with server:', error);
+  }
+}
+
 // Event listeners
 document.getElementById("newQuote").addEventListener("click", showRandomQuote);
 
