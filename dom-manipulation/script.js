@@ -109,6 +109,33 @@ function updateCategoryFilter() {
   categoryFilter.innerHTML = categories.map(category => `<option value="${category}">${category}</option>`).join("");
 }
 
+// Function to export quotes to a JSON file
+function exportToJsonFile() {
+  const json = JSON.stringify(quotes, null, 2);
+  const blob = new Blob([json], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "quotes.json";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// Function to import quotes from a JSON file
+function importFromJsonFile(event) {
+  const fileReader = new FileReader();
+  fileReader.onload = function(event) {
+    const importedQuotes = JSON.parse(event.target.result);
+    quotes.push(...importedQuotes);
+    saveQuotes();
+    updateCategoryFilter();
+    alert('Quotes imported successfully!');
+  };
+  fileReader.readAsText(event.target.files[0]);
+}
+
 // Event listeners
 document.getElementById("newQuote").addEventListener("click", showRandomQuote);
 
